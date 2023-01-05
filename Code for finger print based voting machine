@@ -1,0 +1,419 @@
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(2, 3, 4, 5, 6, 7);
+#include <Adafruit_Fingerprint.h>
+SoftwareSerial mySerial(9, 10);
+int id;
+int a=0, b=0, c=0, d=0;
+Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
+int bjp=0, trs=0, cong=0, nota=0;
+void setup() {
+  pinMode(13, OUTPUT);
+  digitalWrite(13, LOW);
+  pinMode(A0, INPUT_PULLUP);
+  pinMode(A1, INPUT_PULLUP);
+  pinMode(A2, INPUT_PULLUP);
+  pinMode(A3, INPUT_PULLUP);
+  pinMode(A4, INPUT_PULLUP);
+  finger.begin(57600);
+  lcd.begin(16, 2);
+  lcd.setCursor(0, 0);
+  lcd.print("FINGERPRINT     ");
+  lcd.setCursor(0, 1);
+  lcd.print("VOTING MACHINE  ");
+  delay(4000);
+  lcd.clear();
+}
+void loop() {
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("PLACE THE       ");
+  lcd.setCursor(0, 1);
+  lcd.print("FINGER          ");
+  if(digitalRead(A4)==LOW)
+  {
+    lcd.setCursor(0, 0);
+    lcd.print("BJP ");
+    lcd.print(bjp);
+    lcd.print(" CONG ");
+    lcd.print(cong);
+    lcd.setCursor(0, 1);
+    lcd.print("TRS ");
+    lcd.print(trs);
+    lcd.print(" NOTA ");
+    lcd.print(nota);
+    while(1);
+  }
+  id = getFingerprintID();
+  if (id == 1)
+  {
+    if(a==1)
+    {
+      lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("ALREADY CASTED  ");
+    lcd.setCursor(0, 1);
+    lcd.print("ACCESS DENIED   ");
+    while(1)
+    {
+      digitalWrite(13, HIGH);
+      delay(100);
+      digitalWrite(13, LOW);
+      delay(100);
+    }
+    }
+    a=1;
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("WELCOME PERSON1 ");
+    lcd.setCursor(0, 1);
+    lcd.print("                ");
+    digitalWrite(13, HIGH);
+    delay(300);
+    digitalWrite(13, LOW);
+    delay(2000);
+    lcd.setCursor(0, 0);
+    lcd.print("CASTE YOUR VOTE ");
+    lcd.setCursor(0, 1);
+    lcd.print("                ");
+    while ((digitalRead(A0) == HIGH) && (digitalRead(A1) == HIGH) && (digitalRead(A2) == HIGH) && (digitalRead(A3) == HIGH));
+    digitalWrite(13, HIGH);
+    delay(100);
+    digitalWrite(13, LOW);
+    if (digitalRead(A0) == LOW)
+    {
+      ++bjp;
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("BJP             ");
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+    }
+    else if (digitalRead(A1) == LOW)
+    {
+      ++cong;
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("CONGRESS        ");
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+    }
+    else if (digitalRead(A2) == LOW)
+    {
+      ++trs;
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("TRS             ");
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+    }
+    else if (digitalRead(A3) == LOW)
+    {
+      ++nota;
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("NOTA            ");
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+    }
+  }
+  else if (id == 3)
+  {
+    if(b==1)
+    {
+      lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("ALREADY CASTED  ");
+    lcd.setCursor(0, 1);
+    lcd.print("ACCESS DENIED   ");
+    while(1)
+    {
+      digitalWrite(13, HIGH);
+      delay(100);
+      digitalWrite(13, LOW);
+      delay(100);
+    }
+    }
+    b=1;
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("WELCOME PERSON2 ");
+    lcd.setCursor(0, 1);
+    lcd.print("                ");
+    digitalWrite(13, HIGH);
+    delay(300);
+    digitalWrite(13, LOW);
+    delay(2000);
+    lcd.setCursor(0, 0);
+    lcd.print("CASTE YOUR VOTE ");
+    lcd.setCursor(0, 1);
+    lcd.print("                ");
+    while ((digitalRead(A0) == HIGH) && (digitalRead(A1) == HIGH) && (digitalRead(A2) == HIGH) && (digitalRead(A3) == HIGH));
+
+    digitalWrite(13, HIGH);
+    delay(100);
+    digitalWrite(13, LOW);
+    if (digitalRead(A0) == LOW)
+    {
+      ++bjp;
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("BJP             ");
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+    }
+    else if (digitalRead(A1) == LOW)
+    {
+      ++cong;
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("CONGRESS        ");
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+    }
+    else if (digitalRead(A2) == LOW)
+    {
+      ++trs;
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("TRS             ");
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+    }
+    else if (digitalRead(A3) == LOW)
+    {
+      ++nota;
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("NOTA            ");
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+    }
+  }
+  else if (id == 5)
+  {
+    if(c==1)
+    {
+      lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("ALREADY CASTED  ");
+    lcd.setCursor(0, 1);
+    lcd.print("ACCESS DENIED   ");
+    while(1)
+    {
+      digitalWrite(13, HIGH);
+      delay(100);
+      digitalWrite(13, LOW);
+      delay(100);
+    }
+    }
+    c=1;
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("WELCOME PERSON3 ");
+    lcd.setCursor(0, 1);
+    lcd.print("                ");
+    digitalWrite(13, HIGH);
+    delay(300);
+    digitalWrite(13, LOW);
+    delay(2000);
+    lcd.setCursor(0, 0);
+    lcd.print("CASTE YOUR VOTE ");
+    lcd.setCursor(0, 1);
+    lcd.print("                ");
+    while ((digitalRead(A0) == HIGH) && (digitalRead(A1) == HIGH) && (digitalRead(A2) == HIGH) && (digitalRead(A3) == HIGH));
+    digitalWrite(13, HIGH);
+    delay(100);
+    digitalWrite(13, LOW);
+    if (digitalRead(A0) == LOW)
+    {
+      ++bjp;
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("BJP             ");
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+    }
+    else if (digitalRead(A1) == LOW)
+    {
+      ++cong;
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("CONGRESS        ");
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+    }
+    else if (digitalRead(A2) == LOW)
+    {
+      ++trs;
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("TRS             ");
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+    }
+    else if (digitalRead(A3) == LOW)
+    {
+      ++nota;
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("NOTA            ");
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+    }
+  }
+  else if (id == 7)
+  {
+    if(d==1)
+    {
+      lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("ALREADY CASTED  ");
+    lcd.setCursor(0, 1);
+    lcd.print("ACCESS DENIED   ");
+    while(1)
+    {
+      digitalWrite(13, HIGH);
+      delay(100);
+      digitalWrite(13, LOW);
+      delay(100);
+    }
+    }
+    d=1;
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("WELCOME PERSON4 ");
+    lcd.setCursor(0, 1);
+    lcd.print("                 ");
+    digitalWrite(13, HIGH);
+    delay(300);
+    digitalWrite(13, LOW);
+    delay(2000);
+    lcd.setCursor(0, 0);
+    lcd.print("CASTE YOUR VOTE ");
+    lcd.setCursor(0, 1);
+    lcd.print("                ");
+    while ((digitalRead(A0) == HIGH) && (digitalRead(A1) == HIGH) && (digitalRead(A2) == HIGH) && (digitalRead(A3) == HIGH));
+    digitalWrite(13, HIGH);
+    delay(100);
+    digitalWrite(13, LOW);
+    if (digitalRead(A0) == LOW)
+    {
+      ++bjp;
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("BJP             ");
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+    }
+    else if (digitalRead(A1) == LOW)
+    {
+      ++cong;
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("CONGRESS        ");
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+    }
+    else if (digitalRead(A2) == LOW)
+    {
+      ++trs;
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("TRS             ");
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+    }
+    else if (digitalRead(A3) == LOW)
+    {
+      ++nota;
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("NOTA            ");
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+    }
+  }
+  delay(1000);
+}
+
+uint8_t getFingerprintID() {
+  uint8_t p = finger.getImage();
+  switch (p) {
+    case FINGERPRINT_OK:
+      //Serial.println("Image taken");
+      break;
+    case FINGERPRINT_NOFINGER:
+      //Serial.println("No finger detected");
+      return p;
+    case FINGERPRINT_PACKETRECIEVEERR:
+      //Serial.println("Communication error");
+      return p;
+    case FINGERPRINT_IMAGEFAIL:
+      //Serial.println("Imaging error");
+      return p;
+    default:
+      //Serial.println("Unknown error");
+      return p;
+  }
+
+  // OK success!
+  p = finger.image2Tz();
+  switch (p) {
+    case FINGERPRINT_OK:
+      //Serial.println("Image converted");
+      break;
+    case FINGERPRINT_IMAGEMESS:
+      //Serial.println("Image too messy");
+      return p;
+    case FINGERPRINT_PACKETRECIEVEERR:
+      //Serial.println("Communication error");
+      return p;
+    case FINGERPRINT_FEATUREFAIL:
+      //Serial.println("Could not find fingerprint features");
+      return p;
+    case FINGERPRINT_INVALIDIMAGE:
+      //Serial.println("Could not find fingerprint features");
+      return p;
+    default:
+      //Serial.println("Unknown error");
+      return p;
+  }
+  // OK converted!
+  p = finger.fingerSearch();
+  if (p == FINGERPRINT_OK) {
+    //Serial.println("Found a print match!");
+  } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
+    //Serial.println("Communication error");
+    return p;
+  } else if (p == FINGERPRINT_NOTFOUND) {
+    lcd.setCursor(0, 0);
+    lcd.print("FINGERPRINT NOT ");
+    lcd.setCursor(0, 1);
+    lcd.print("FOUND           ");
+    digitalWrite(13, HIGH);
+    delay(3000);
+    digitalWrite(13, LOW);
+    //Serial.println("Did not find a match");
+    return p;
+  } else {
+    //Serial.println("Unknown error");
+    return p;
+  }
+  // found a match!
+  //Serial.print("Found ID #"); Serial.print(finger.fingerID);
+  //Serial.print(" with confidence of "); Serial.println(finger.confidence);
+  return finger.fingerID;
+}
+// returns -1 if failed, otherwise returns ID #
+int getFingerprintIDez() {
+  uint8_t p = finger.getImage();
+  if (p != FINGERPRINT_OK)  return -1;
+  p = finger.image2Tz();
+  if (p != FINGERPRINT_OK)  return -1;
+  p = finger.fingerFastSearch();
+  if (p != FINGERPRINT_OK)  return -1;
+  // found a match!
+  //Serial.print("Found ID #"); Serial.print(finger.fingerID);
+  //Serial.print(" with confidence of "); Serial.println(finger.confidence);
+  return finger.fingerID;
+}
